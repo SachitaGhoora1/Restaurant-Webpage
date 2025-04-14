@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Island Spice Heaven Restaurant</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* Reset and Base Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      background-color: white;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    /* Header Styles */
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+      padding: 20px 0;
+    }
+
+    header h1 {
+      font-size: 2.5rem;
+      color: rgb(224, 93, 22);
+      margin-bottom: 10px;
+    }
+
+    header p {
+      color: #666;
+      font-size: 1.1rem;
+    }
+
+    /* Layout */
+    .content {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    }
+
+    @media (min-width: 992px) {
+      .content {
+        flex-direction: row;
+      }
+
+      .menu-section {
+        flex: 2;
+      }
+
+      .cart-section {
+        flex: 1;
+      }
+    }
+
+    /* Tabs */
+    .tabs {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-bottom: 30px;
+    }
+
+    .tab-btn {
+      padding: 12px;
+      background-color: #f5f5f5;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .tab-btn:hover {
+      background-color: #e0e0e0;
+    }
+
+    .tab-btn.active {
+      background-color: #4a6fa5;
+      color: white;
+    }
+
+    /* Menu Items */
+    .menu-items {
+      display: grid;
+      grid-template-columns: repeat(1, 1fr);
+      gap: 20px;
+    }
+
+    @media (min-width: 768px) {
+      .menu-items {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (min-width: 1200px) {
+      .menu-items {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .menu-item {
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      background-color: white;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .menu-item-image {
+      height: 200px;
+      overflow: hidden;
+    }
+
+    .menu-item-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    .menu-item:hover .menu-item-image img {
+      transform: scale(1.05);
+    }
+
+    .menu-item-content {
+      padding: 15px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .menu-item-title {
+      font-size: 1.2rem;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    .menu-item-description {
+      color: #666;
+      font-size: 0.9rem;
+      margin-bottom: 15px;
+      flex-grow: 1;
+    }
+
+    .menu-item-price {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 15px;
+    }
+
+    .add-to-cart {
+      width: 100%;
+      padding: 10px;
+      background-color: white;
+      color: #4a6fa5;
+      border: 1px solid #4a6fa5;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+    }
+
+    .add-to-cart:hover {
+      background-color: #4a6fa5;
+      color: white;
+    }
+
+    /* Cart Styles */
+    .cart-container {
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      background-color: white;
+      position: sticky;
+      top: 20px;
+    }
+
+    .cart-header {
+      padding: 15px;
+      border-bottom: 1px solid #e0e0e0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .cart-header h2 {
+      font-size: 1.2rem;
+    }
+
+    .clear-btn {
+      background: none;
+      border: none;
+      color: #e53935;
+      cursor: pointer;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .clear-btn:hover {
+      color: #c62828;
+    }
+
+    .cart-items {
+      padding: 15px;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+
+    .empty-cart {
+      text-align: center;
+      color: #888;
+      padding: 30px 0;
+    }
+
+    .cart-item {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      padding-bottom: 15px;
+      margin-bottom: 15px;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    .cart-item-image {
+      width: 60px;
+      height: 60px;
+      border-radius: 5px;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .cart-item-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .cart-item-details {
+      flex-grow: 1;
+    }
+
+    .cart-item-title {
+      font-weight: 600;
+      margin-bottom: 5px;
+    }
+
+    .cart-item-price {
+      color: #666;
+      font-size: 0.9rem;
+    }
+
+    .cart-item-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .quantity-btn {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 1px solid #ddd;
+      background-color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .quantity-btn:hover {
+      background-color: #f5f5f5;
+    }
+
+    .cart-item-quantity {
+      width: 24px;
+      text-align: center;
+    }
+
+    .cart-footer {
+      padding: 15px;
+      border-top: 1px solid #e0e0e0;
+    }
+
+    .cart-total {
+      display: flex;
+      justify-content: space-between;
+      font-weight: 700;
+      font-size: 1.1rem;
+      margin-bottom: 15px;
+    }
+
+    .checkout-btn {
+      width: 100%;
+      padding: 12px;
+      background-color: #4a6fa5;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .checkout-btn:hover {
+      background-color: #3d5d8a;
+    }
+
+    .checkout-btn:disabled {
+      background-color: #cccccc;
+      cursor: not-allowed;
+    }
+
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+    }
+
+    .modal-content {
+      background-color: white;
+      margin: 50px auto;
+      width: 90%;
+      max-width: 900px;
+      border-radius: 8px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      animation: modalFadeIn 0.3s;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    @keyframes modalFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .modal-header {
+      padding: 20px;
+      border-bottom: 1px solid #e0e0e0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-header h2 {
+      font-size: 1.5rem;
+    }
+
+    .close-modal {
+      font-size: 1.8rem;
+      cursor: pointer;
+      color: #888;
+    }
+
+    .close-modal:hover {
+      color: #333;
+    }
+
+    .modal-body {
+      padding: 20px;
+    }
+
+    /* Form Styles */
+    .form-section {
+      margin-bottom: 30px;
+    }
+
+    .form-section h3 {
+      margin-bottom: 15px;
+      font-size: 1.2rem;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 15px;
+      margin-bottom: 15px;
+    }
+
+    @media (min-width: 768px) {
+      .form-row {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 600;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-size: 1rem;
+    }
+
+    .radio-group {
+      margin-bottom: 20px;
+    }
+
+    .radio-option {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .radio-option input[type="radio"] {
+      margin-right: 10px;
+    }
+
+    .radio-option label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Order Summary */
+    .order-summary {
+      margin-top: 30px;
+      padding: 20px;
+      background-color: #f9f9f9;
+      border-radius: 8px;
+    }
+
+    .order-summary h3 {
+      margin-bottom: 15px;
+      font-size: 1.2rem;
+    }
+
+    .checkout-item {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 15px;
+    }
+
+    .checkout-item-image {
+      width: 50px;
+      height: 50px;
+      border-radius: 5px;
+      overflow: hidden;
+    }
+
+    .checkout-item-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .checkout-item-details {
+      flex-grow: 1;
+    }
+
+    .checkout-item-title {
+      font-weight: 600;
+    }
+
+    .checkout-item-quantity {
+      color: #666;
+      font-size: 0.9rem;
+    }
+
+    .checkout-item-price {
+      font-weight: 600;
+    }
+
+    .summary-totals {
+      margin-top: 20px;
+      border-top: 1px solid #ddd;
+      padding-top: 15px;
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .summary-row.total {
+      font-weight: 700;
+      font-size: 1.2rem;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid #ddd;
+    }
+
+    .place-order-btn {
+      width: 100%;
+      padding: 15px;
+      background-color: #4a6fa5;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 1.1rem;
+      margin-top: 20px;
+      transition: all 0.3s ease;
+    }
+
+    .place-order-btn:hover {
+      background-color: #3d5d8a;
+    }
+
+    /* Confirmation Modal */
+    .confirmation {
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .confirmation-icon {
+      font-size: 4rem;
+      color: #4CAF50;
+      margin-bottom: 20px;
+    }
+
+    .confirmation h2 {
+      margin-bottom: 20px;
+    }
+
+    .confirmation p {
+      margin-bottom: 15px;
+      color: #555;
+    }
+
+    .back-btn {
+      padding: 12px 25px;
+      background-color: #4a6fa5;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: 600;
+      margin-top: 20px;
+      transition: all 0.3s ease;
+    }
+
+    .back-btn:hover {
+      background-color: #3d5d8a;
+    }
+
+    #overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 999;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Island Spice Heaven Restaurant menu</h1>
+      <p>Exquisite Island cuisine for every palate</p>
+    </header>
+
+    <main class="content">
+      <section class="menu-section">
+        <div class="tabs">
+          <button class="tab-btn active" data-category="starters">Starters</button>
+          <button class="tab-btn" data-category="main">Main Course</button>
+          <button class="tab-btn" data-category="desserts">Desserts</button>
+          <button class="tab-btn" data-category="drinks">Drinks</button>
+        </div>
+
+        <div class="menu-items" id="menu-container">
+          <!-- Menu items will be inserted here -->
+        </div>
+      </section>
+
+      <section class="cart-section">
+        <div class="cart-container">
+          <div class="cart-header">
+            <h2>Your Cart</h2>
+            <button id="clear-cart" class="clear-btn"><i class="fas fa-trash"></i> Clear</button>
+          </div>
+          <div class="cart-items" id="cart-items">
+            <!-- Cart items will be inserted here -->
+          </div>
+          <div class="cart-footer">
+            <div class="cart-total">
+              <span>Total:</span>
+              <span id="cart-total">$0.00</span>
+            </div>
+            <button id="checkout-btn" class="checkout-btn" disabled>Proceed to Checkout</button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Checkout Modal -->
+    <div id="checkout-modal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Checkout</h2>
+          <span class="close-modal">&times;</span>
+        </div>
+        <div class="modal-body">
+          <form id="checkout-form">
+            <div class="form-section">
+              <h3>Contact Information</h3>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="firstName">First Name</label>
+                  <input type="text" id="firstName" required>
+                </div>
+                <div class="form-group">
+                  <label for="lastName">Last Name</label>
+                  <input type="text" id="lastName" required>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" required>
+              </div>
+              <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" required>
+              </div>
+            </div>
+
+            <div class="form-section">
+              <h3>Payment Method</h3>
+              <div class="radio-group">
+                <div class="radio-option">
+                  <input type="radio" id="card" name="payment" value="card" checked>
+                  <label for="card"><i class="fas fa-credit-card"></i> Credit/Debit Card</label>
+                </div>
+                <div class="radio-option">
+                  <input type="radio" id="cash" name="payment" value="cash">
+                  <label for="cash"><i class="fas fa-money-bill-wave"></i> Cash on Delivery</label>
+                </div>
+              </div>
+
+              <div id="card-details">
+                <div class="form-group">
+                  <label for="cardNumber">Card Number</label>
+                  <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456">
+                </div>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="expiry">Expiry Date</label>
+                    <input type="text" id="expiry" placeholder="MM/YY">
+                  </div>
+                  <div class="form-group">
+                    <label for="cvc">CVC</label>
+                    <input type="text" id="cvc" placeholder="123">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="order-summary">
+              <h3>Order Summary</h3>
+              <div id="checkout-items">
+                <!-- Order items will be dynamically inserted here -->
+              </div>
+              <div class="summary-totals">
+                <div class="summary-row">
+                  <span>Subtotal</span>
+                  <span id="checkout-subtotal">$0.00</span>
+                </div>
+                <div class="summary-row">
+                  <span>Tax</span>
+                  <span id="checkout-tax">$0.00</span>
+                </div>
+                <div class="summary-row total">
+                  <span>Total</span>
+                  <span id="checkout-total">$0.00</span>
+                </div>
+              </div>
+            </div>
+
+            <button type="submit" id="place-order-btn" class="place-order-btn">
+              Place Order
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Order Confirmation Modal -->
+    <div id="confirmation-modal" class="modal">
+      <div class="modal-content confirmation">
+        <div class="confirmation-icon">
+          <i class="fas fa-check-circle"></i>
+        </div>
+        <h2>Order Confirmed!</h2>
+        <p>Thank you for your order. Your order number is <span id="order-number">#12345</span>.</p>
+        <p>You will receive a confirmation email shortly with the details of your order.</p>
+        <button id="back-to-menu" class="back-btn">Return to Menu</button>
+      </div>
+    </div>
+
+    <div id="overlay"></div>
+  </div>
+
+  <script>
+    // Menu data 
+    const menuData = {
+      starters: [
+        {
+          id: 'starter-1',
+          name: 'Calamari Fritti',
+          description: 'Crispy fried calamari rings served with tangy lemon aioli and marinara sauce',
+          price: 12.99,
+          image: 'https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60'
+        },
+        {
+          id: 'starter-2',
+          name: 'Chicken Lollipops',
+          description: 'Spicy marinated chicken wings frenched into lollipops, deep-fried and glazed with sweet chili sauce',
+          price: 14.99,
+          image: 'https://images.unsplash.com/photo-1527477396000-e27163b481c2?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60'
+        },
+        {
+          id: 'starter-3',
+          name: 'Shrimp Cocktail',
+          description: 'Chilled jumbo shrimp served with our signature cocktail sauce and fresh lemon wedges',
+          price: 16.99,
+          image: 'https://images.unsplash.com/photo-1565895405138-6c3a1555da6a?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60'
+        }
+      ],
+      main: [
+        {
+          id: 'main-1',
+          name: 'Mauritian Biryani',
+          description: 'Fragrant basmati rice cooked with aromatic spices, tender meat, and vegetables in traditional Mauritian style',
+          price: 22.99,
+          image: 'https://images.unsplash.com/photo-1589302168068-964664d93dc0?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60'
+        },
+        {
+          id: 'main-2',
+          name: 'Mauritian Style Chinese Fried Noodles',
+          description: 'Stir-fried egg noodles with vegetables, meat, and seafood, seasoned with a unique Mauritian-Chinese blend of spices',
+          price: 19.99,
+          image: 'https://images.unsplash.com/photo-1585032226651-759b368d7246?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60'
+        },
+        {
+          id: 'main-3',
+          name: 'Seafood Pasta',
+          description: 'Al dente pasta tossed with a medley of fresh seafood in a rich garlic and white wine sauce',
+          price: 24.99,
+          image: 'https://images.unsplash.com/photo-1563379926898-05f4575a45d8?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60'
+        }
+      ],
+      desserts: [
+        {
+          id: 'dessert-1',
+          name: 'Tiramisu',
+          description: 'Classic Italian dessert with layers of coffee-soaked ladyfingers and mascarpone cream',
+          price: 9.99,
+          image: 'https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60'
+        },
+        {
+          id: 'dessert-2',
+          name: 'Chocolate Lava Cake',
+          description: 'Warm chocolate cake with a molten center, served with vanilla ice cream',
+          price: 11.99,
+          image: 'https://images.unsplash.com/photo-1617305855058-336d24456869?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60'
+        },
+        {
+          id: 'dessert-3',
+          name: 'New York Cheesecake',
+          description: 'Creamy cheesecake with a graham cracker crust, topped with fresh berries',
+          price: 10.99,
+          image: 'https://images.unsplash.com/photo-1533134242443-d4fd215305ad?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60'
+        }
+      ],
+      drinks: [
+        {
+          id: 'drink-1',
+          name: 'Signature Mojito',
+          description: 'Refreshing cocktail with rum, mint, lime, and soda water',
+          price: 12.99,
+          image: 'https://images.unsplash.com/photo-1551538827-9c037cb4f32a?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60'
+        },
+        {
+          id: 'drink-2',
+          name: 'House Red Wine',
+          description: 'Glass of our premium house red wine selection',
+          price: 9.99,
+          image: 'https://images.unsplash.com/photo-1553361371-9b22f78e8b1d?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60'
+        },
+        {
+          id: 'drink-3',
+          name: 'Fresh Fruit Smoothie',
+          description: 'Blend of seasonal fruits with yogurt and honey',
+          price: 7.99,
+          image: 'https://images.unsplash.com/photo-1505252585461-04db1eb84625?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60'
+        }
+      ]
+    };
+
+    // DOM Elements
+    const menuContainer = document.getElementById('menu-container');
+    const cartItems = document.getElementById('cart-items');
+    const cartTotal = document.getElementById('cart-total');
+    const checkoutBtn = document.getElementById('checkout-btn');
+    const clearCartBtn = document.getElementById('clear-cart');
+    const tabButtons = document.querySelectorAll('.tab-btn');
+    const checkoutModal = document.getElementById('checkout-modal');
+    const confirmationModal = document.getElementById('confirmation-modal');
+    const overlay = document.getElementById('overlay');
+    const closeModal = document.querySelector('.close-modal');
+    const checkoutForm = document.getElementById('checkout-form');
+    const checkoutItems = document.getElementById('checkout-items');
+    const checkoutSubtotal = document.getElementById('checkout-subtotal');
+    const checkoutTax = document.getElementById('checkout-tax');
+    const checkoutTotal = document.getElementById('checkout-total');
+    const orderNumber = document.getElementById('order-number');
+    const backToMenuBtn = document.getElementById('back-to-menu');
+    const paymentRadios = document.querySelectorAll('input[name="payment"]');
+    const cardDetails = document.getElementById('card-details');
+
+    // Cart state
+    let cart = [];
+    let activeCategory = 'starters';
+
+    // Initialize the application
+    function init() {
+      renderMenuItems(activeCategory);
+      setupEventListeners();
+      updateCartFromLocalStorage();
+    }
+
+    // Set up event listeners
+    function setupEventListeners() {
+      // Tab buttons
+      tabButtons.forEach(button => {
+        button.addEventListener('click', () => {
+          const category = button.dataset.category;
+          setActiveTab(button);
+          renderMenuItems(category);
+        });
+      });
+
+      // Checkout button
+      checkoutBtn.addEventListener('click', openCheckoutModal);
+
+      // Clear cart button
+      clearCartBtn.addEventListener('click', clearCart);
+
+      // Close modal
+      closeModal.addEventListener('click', closeCheckoutModal);
+
+      // Checkout form submission
+      checkoutForm.addEventListener('submit', handleCheckout);
+
+      // Back to menu button
+      backToMenuBtn.addEventListener('click', () => {
+        confirmationModal.style.display = 'none';
+        overlay.style.display = 'none';
+      });
+
+      // Payment method change
+      paymentRadios.forEach(radio => {
+        radio.addEventListener('change', toggleCardDetails);
+      });
+
+      // Close modal when clicking outside
+      window.addEventListener('click', (e) => {
+        if (e.target === overlay) {
+          closeCheckoutModal();
+        }
+      });
+    }
+
+    // Set active tab
+    function setActiveTab(activeButton) {
+      tabButtons.forEach(button => {
+        button.classList.remove('active');
+      });
+      activeButton.classList.add('active');
+      activeCategory = activeButton.dataset.category;
+    }
+
+    // Render menu items for a category
+    function renderMenuItems(category) {
+      menuContainer.innerHTML = '';
+      
+      menuData[category].forEach(item => {
+        const menuItem = document.createElement('div');
+        menuItem.className = 'menu-item';
+        menuItem.innerHTML = `
+          <div class="menu-item-image">
+            <img src="${item.image}" alt="${item.name}">
+          </div>
+          <div class="menu-item-content">
+            <h3 class="menu-item-title">${item.name}</h3>
+            <p class="menu-item-description">${item.description}</p>
+            <div class="menu-item-price">$${item.price.toFixed(2)}</div>
+            <button class="add-to-cart" data-id="${item.id}">
+              <i class="fas fa-plus-circle"></i> Add to Cart
+            </button>
+          </div>
+        `;
+        
+        menuContainer.appendChild(menuItem);
+        
+        // Add event listener to the Add to Cart button
+        const addToCartBtn = menuItem.querySelector('.add-to-cart');
+        addToCartBtn.addEventListener('click', () => addToCart(item));
+      });
+    }
+
+    // Add item to cart
+    function addToCart(item) {
+      const existingItem = cart.find(cartItem => cartItem.id === item.id);
+      
+      if (existingItem) {
+        existingItem.quantity += 1;
+      } else {
+        cart.push({
+          ...item,
+          quantity: 1
+        });
+      }
+      
+      updateCart();
+      saveCartToLocalStorage();
+    }
+
+    // Remove item from cart
+    function removeFromCart(itemId) {
+      const existingItem = cart.find(item => item.id === itemId);
+      
+      if (existingItem && existingItem.quantity > 1) {
+        existingItem.quantity -= 1;
+      } else {
+        cart = cart.filter(item => item.id !== itemId);
+      }
+      
+      updateCart();
+      saveCartToLocalStorage();
+    }
+
+    // Clear cart
+    function clearCart() {
+      cart = [];
+      updateCart();
+      saveCartToLocalStorage();
+    }
+
+    // Update cart UI
+    function updateCart() {
+      if (cart.length === 0) {
+        cartItems.innerHTML = '<div class="empty-cart">Your cart is empty</div>';
+        checkoutBtn.disabled = true;
+      } else {
+        cartItems.innerHTML = '';
+        
+        cart.forEach(item => {
+          const cartItem = document.createElement('div');
+          cartItem.className = 'cart-item';
+          cartItem.innerHTML = `
+            <div class="cart-item-image">
+              <img src="${item.image}" alt="${item.name}">
+            </div>
+            <div class="cart-item-details">
+              <div class="cart-item-title">${item.name}</div>
+              <div class="cart-item-price">$${item.price.toFixed(2)} × ${item.quantity}</div>
+            </div>
+            <div class="cart-item-controls">
+              <button class="quantity-btn minus" data-id="${item.id}">
+                <i class="fas fa-minus"></i>
+              </button>
+              <span class="cart-item-quantity">${item.quantity}</span>
+              <button class="quantity-btn plus" data-id="${item.id}">
+                <i class="fas fa-plus"></i>
+              </button>
+            </div>
+          `;
+          
+          cartItems.appendChild(cartItem);
+          
+          // Add event listeners to quantity buttons
+          const minusBtn = cartItem.querySelector('.minus');
+          const plusBtn = cartItem.querySelector('.plus');
+          
+          minusBtn.addEventListener('click', () => removeFromCart(item.id));
+          plusBtn.addEventListener('click', () => addToCart(item));
+        });
+        
+        checkoutBtn.disabled = false;
+      }
+      
+      // Update cart total
+      const total = calculateTotal();
+      cartTotal.textContent = `$${total.toFixed(2)}`;
+    }
+
+    // Calculate cart total
+    function calculateTotal() {
+      return cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+    }
+
+    // Save cart to localStorage
+    function saveCartToLocalStorage() {
+      localStorage.setItem('restaurantCart', JSON.stringify(cart));
+    }
+
+    // Update cart from localStorage
+    function updateCartFromLocalStorage() {
+      const savedCart = localStorage.getItem('restaurantCart');
+      if (savedCart) {
+        cart = JSON.parse(savedCart);
+        updateCart();
+      }
+    }
+
+    // Open checkout modal
+    function openCheckoutModal() {
+      if (cart.length === 0) return;
+      
+      renderCheckoutItems();
+      checkoutModal.style.display = 'block';
+      overlay.style.display = 'block';
+    }
+
+    // Close checkout modal
+    function closeCheckoutModal() {
+      checkoutModal.style.display = 'none';
+      overlay.style.display = 'none';
+    }
+
+    // Render checkout items
+    function renderCheckoutItems() {
+      checkoutItems.innerHTML = '';
+      
+      cart.forEach(item => {
+        const checkoutItem = document.createElement('div');
+        checkoutItem.className = 'checkout-item';
+        checkoutItem.innerHTML = `
+          <div class="checkout-item-image">
+            <img src="${item.image}" alt="${item.name}">
+          </div>
+          <div class="checkout-item-details">
+            <div class="checkout-item-title">${item.name}</div>
+            <div class="checkout-item-quantity">Quantity: ${item.quantity}</div>
+          </div>
+          <div class="checkout-item-price">$${(item.price * item.quantity).toFixed(2)}</div>
+        `;
+        
+        checkoutItems.appendChild(checkoutItem);
+      });
+      
+      // Update totals
+      const subtotal = calculateTotal();
+      const tax = subtotal * 0.1;
+      const total = subtotal + tax;
+      
+      checkoutSubtotal.textContent = `$${subtotal.toFixed(2)}`;
+      checkoutTax.textContent = `$${tax.toFixed(2)}`;
+      checkoutTotal.textContent = `$${total.toFixed(2)}`;
+    }
+
+    // Toggle card details based on payment method
+    function toggleCardDetails() {
+      const paymentMethod = document.querySelector('input[name="payment"]:checked').value;
+      
+      if (paymentMethod === 'card') {
+        cardDetails.style.display = 'block';
+        document.getElementById('cardNumber').required = true;
+        document.getElementById('expiry').required = true;
+        document.getElementById('cvc').required = true;
+      } else {
+        cardDetails.style.display = 'none';
+        document.getElementById('cardNumber').required = false;
+        document.getElementById('expiry').required = false;
+        document.getElementById('cvc').required = false;
+      }
+    }
+
+    // Handle checkout form submission
+    function handleCheckout(e) {
+      e.preventDefault();
+      
+      // Show processing state
+      const submitBtn = document.getElementById('place-order-btn');
+      submitBtn.textContent = 'Processing...';
+      submitBtn.disabled = true;
+      
+      // Simulate payment processing
+      setTimeout(() => {
+        // Generate random order number
+        const randomOrderNum = Math.floor(10000 + Math.random() * 90000);
+        orderNumber.textContent = `#${randomOrderNum}`;
+        
+        // Hide checkout modal and show confirmation
+        checkoutModal.style.display = 'none';
+        confirmationModal.style.display = 'block';
+        
+        // Reset form
+        checkoutForm.reset();
+        submitBtn.textContent = 'Place Order';
+        submitBtn.disabled = false;
+        
+        // Clear cart
+        clearCart();
+      }, 1500);
+    }
+
+    // Initialize the app when DOM is loaded
+    document.addEventListener('DOMContentLoaded', init);
+
+    // Initialize card details visibility
+    toggleCardDetails();
+  </script>
+</body>
+</html>

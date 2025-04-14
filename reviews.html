@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Island Spice Heaven - Customer Reviews</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* Reset and Base Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      background-color: #f9f9f9;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* Header Styles */
+    header {
+      background-color: #fff;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      padding: 20px 0;
+      margin-bottom: 40px;
+      text-align: center;
+    }
+
+    .logo h1 {
+      font-size: 2.5rem;
+      color: #e67e22;
+      font-weight: 700;
+    }
+
+    .tagline {
+      color: #777;
+      font-size: 1.1rem;
+      margin-top: 5px;
+    }
+
+    /* Section Title */
+    .section-title {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    .section-title h2 {
+      font-size: 2.5rem;
+      color: #333;
+      margin-bottom: 15px;
+    }
+
+    .section-title p {
+      color: #777;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    /* Reviews Section */
+    .reviews {
+      padding: 60px 0;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      margin-bottom: 60px;
+    }
+
+    .review-filters {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 40px;
+    }
+
+    .filter-btn {
+      background: none;
+      border: none;
+      padding: 8px 15px;
+      margin: 0 5px;
+      cursor: pointer;
+      font-weight: 600;
+      color: #777;
+      transition: all 0.3s ease;
+    }
+
+    .filter-btn:hover, .filter-btn.active {
+      color: #e67e22;
+    }
+
+    .reviews-container {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .reviews-slider {
+      display: flex;
+      transition: transform 0.5s ease;
+    }
+
+    .review-card {
+      min-width: 100%;
+      padding: 30px;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .review-image {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      overflow: hidden;
+      margin-bottom: 20px;
+      border: 3px solid #e67e22;
+    }
+
+    .review-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .review-content h3 {
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+      color: #333;
+    }
+
+    .review-date {
+      font-size: 0.9rem;
+      color: #777;
+      margin-bottom: 15px;
+    }
+
+    .review-stars {
+      color: #e67e22;
+      margin-bottom: 15px;
+      font-size: 1.2rem;
+    }
+
+    .review-text {
+      margin-bottom: 20px;
+      color: #555;
+      max-width: 800px;
+    }
+
+    .review-controls {
+      display: flex;
+      justify-content: center;
+      margin-top: 30px;
+    }
+
+    .review-control {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      color: #e67e22;
+      cursor: pointer;
+      margin: 0 15px;
+      transition: all 0.3s ease;
+    }
+
+    .review-control:hover {
+      color: #d35400;
+      transform: scale(1.2);
+    }
+
+    .review-indicators {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .indicator {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background-color: #ddd;
+      margin: 0 5px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .indicator.active {
+      background-color: #e67e22;
+      transform: scale(1.2);
+    }
+
+    /* Add Review Section */
+    .add-review {
+      padding: 60px 0;
+    }
+
+    .review-form {
+      max-width: 700px;
+      margin: 0 auto;
+      background-color: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-size: 1rem;
+    }
+
+    textarea.form-control {
+      height: 150px;
+      resize: vertical;
+    }
+
+    .star-rating {
+      display: flex;
+      flex-direction: row-reverse;
+      justify-content: flex-end;
+    }
+
+    .star-rating input {
+      display: none;
+    }
+
+    .star-rating label {
+      cursor: pointer;
+      font-size: 1.5rem;
+      color: #ddd;
+      margin-right: 5px;
+    }
+
+    .star-rating label:hover,
+    .star-rating label:hover ~ label,
+    .star-rating input:checked ~ label {
+      color: #e67e22;
+    }
+
+    .submit-btn {
+      background-color: #e67e22;
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 30px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .submit-btn:hover {
+      background-color: #d35400;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 20px 0;
+      color: #777;
+      font-size: 0.9rem;
+    }
+
+    /* Responsive Styles */
+    @media screen and (max-width: 768px) {
+      .logo h1 {
+        font-size: 2rem;
+      }
+
+      .section-title h2 {
+        font-size: 2rem;
+      }
+
+      .review-card {
+        padding: 20px;
+      }
+
+      .review-text {
+        font-size: 0.95rem;
+      }
+    }
+
+    @media screen and (max-width: 480px) {
+      .logo h1 {
+        font-size: 1.8rem;
+      }
+
+      .section-title h2 {
+        font-size: 1.8rem;
+      }
+
+      .review-image {
+        width: 80px;
+        height: 80px;
+      }
+
+      .review-content h3 {
+        font-size: 1.3rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="container">
+      <div class="logo">
+        <h1>Island Spice Heaven</h1>
+      </div>
+      <p class="tagline">Authentic Mauritian Cuisine with Exceptional Service</p>
+    </div>
+  </header>
+
+  <!-- Reviews Section -->
+  <section class="reviews">
+    <div class="container">
+      <div class="section-title">
+        <h2>Customer Reviews</h2>
+        <p>See what our guests have to say about their experience at Island Spice Heaven</p>
+      </div>
+      <div class="review-filters">
+        <button class="filter-btn active" data-filter="all">All Reviews</button>
+        <button class="filter-btn" data-filter="5">5 Star</button>
+        <button class="filter-btn" data-filter="4">4 Star</button>
+        <button class="filter-btn" data-filter="3">3 Star</button>
+      </div>
+      <div class="reviews-container">
+        <div class="reviews-slider" id="reviews-slider">
+          <!-- Review cards will be dynamically inserted here -->
+        </div>
+        <div class="review-controls">
+          <button class="review-control" id="prev-review">
+            <i class="fas fa-chevron-left"></i>
+          </button>
+          <button class="review-control" id="next-review">
+            <i class="fas fa-chevron-right"></i>
+          </button>
+        </div>
+        <div class="review-indicators" id="review-indicators">
+          <!-- Indicators will be dynamically inserted here -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Add Review Section -->
+  <section class="add-review">
+    <div class="container">
+      <div class="section-title">
+        <h2>Share Your Experience</h2>
+        <p>We'd love to hear about your visit to Island Spice Heaven</p>
+      </div>
+      <form class="review-form" id="review-form">
+        <div class="form-group">
+          <label for="name">Your Name</label>
+          <input type="text" id="name" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label>Rating</label>
+          <div class="star-rating">
+            <input type="radio" id="star5" name="rating" value="5" required>
+            <label for="star5"><i class="fas fa-star"></i></label>
+            <input type="radio" id="star4" name="rating" value="4">
+            <label for="star4"><i class="fas fa-star"></i></label>
+            <input type="radio" id="star3" name="rating" value="3">
+            <label for="star3"><i class="fas fa-star"></i></label>
+            <input type="radio" id="star2" name="rating" value="2">
+            <label for="star2"><i class="fas fa-star"></i></label>
+            <input type="radio" id="star1" name="rating" value="1">
+            <label for="star1"><i class="fas fa-star"></i></label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="review">Your Review</label>
+          <textarea id="review" class="form-control" required></textarea>
+        </div>
+        <div class="form-group">
+          <label for="photo">Upload a Photo (Optional)</label>
+          <input type="file" id="photo" class="form-control" accept="image/*">
+        </div>
+        <button type="submit" class="submit-btn">Submit Review</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>&copy; 2023 Island Spice Heaven. All Rights Reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Review Data
+    const reviewsData = [
+      {
+        id: 1,
+        name: "Amélie Dupont",
+        date: "October 5, 2023",
+        rating: 5,
+        text: "My family and I had the most wonderful dining experience at Island Spice Heaven! The staff was incredibly attentive, especially with our children. They brought coloring books and special kid-friendly utensils without us even asking. The manager, Ravi, personally came to check on us multiple times. The seafood curry was absolutely divine - perfectly spiced with the freshest ingredients. We'll definitely be returning on our next trip to Mauritius!",
+        image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80"
+      },
+      {
+        id: 2,
+        name: "Jean-Pierre Laval",
+        date: "September 18, 2023",
+        rating: 5,
+        text: "Island Spice Heaven exceeded all my expectations! As someone with dietary restrictions, I'm often hesitant about dining out, but the staff here was incredibly accommodating. Our server, Anita, took the time to discuss my allergies with the chef, who then prepared a special dish just for me. The attention to detail was remarkable - from the beautiful presentation to the personalized service. The beachfront setting at sunset created the perfect ambiance for our anniversary dinner.",
+        image: "https://images.unsplash.com/photo-1566492031773-4f4e44671857?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80"
+      },
+      {
+        id: 3,
+        name: "Marie-Claire Roussel",
+        date: "August 30, 2023",
+        rating: 4,
+        text: "We discovered Island Spice Heaven on the last day of our vacation, and I wish we had found it sooner! The service was impeccable from the moment we walked in. Our waiter, Jean, was knowledgeable about every dish and recommended the perfect wine pairing. When it started to rain, the staff quickly rearranged the outdoor seating and provided umbrellas without any disruption to our meal. The only reason for 4 stars instead of 5 is that we had to wait a bit for our table despite having a reservation. However, they made up for it with complimentary appetizers.",
+        image: "https://images.unsplash.com/photo-1589571894960-20bbe2828d0a?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80"
+      },
+      {
+        id: 4,
+        name: "Antoine Perrier",
+        date: "October 12, 2023",
+        rating: 5,
+        text: "Island Spice Heaven provided the highlight of our Mauritius trip! We celebrated my wife's birthday here, and I secretly arranged with the restaurant to prepare something special. Not only did they create a custom dessert with 'Happy Birthday' written in chocolate, but the entire staff came out singing a traditional Mauritian birthday song! The genuine warmth and hospitality of everyone at this restaurant is unmatched. Our server, Priya, remembered our preferences from our visit two days prior and made excellent recommendations. The grilled lobster was the best I've ever tasted - perfectly cooked and seasoned.",
+        image: "https://images.unsplash.com/photo-1578774296842-c45e472b3028?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80"
+      },
+      {
+        id: 5,
+        name: "Louis Fontaine",
+        date: "July 5, 2023",
+        rating: 3,
+        text: "The location and ambiance of Island Spice Heaven are absolutely stunning. The staff was friendly and attentive, which made for a pleasant dining experience. The food was good, though some dishes were a bit too spicy for my taste. When I mentioned this to our server, they immediately offered alternatives. I appreciate their responsiveness, but would have preferred if the menu had indicated the spice level of each dish. Overall, still a good experience and the view is unbeatable.",
+        image: "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80"
+      }
+    ];
+
+    // DOM Elements
+    const reviewsSlider = document.getElementById('reviews-slider');
+    const reviewIndicators = document.getElementById('review-indicators');
+    const prevReviewBtn = document.getElementById('prev-review');
+    const nextReviewBtn = document.getElementById('next-review');
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const reviewForm = document.getElementById('review-form');
+
+    // Variables
+    let currentSlide = 0;
+    let filteredReviews = [...reviewsData];
+
+    // Initialize the page
+    function init() {
+      renderReviews();
+      setupEventListeners();
+    }
+
+    // Render reviews
+    function renderReviews() {
+      reviewsSlider.innerHTML = '';
+      reviewIndicators.innerHTML = '';
+      
+      filteredReviews.forEach((review, index) => {
+        // Create review card
+        const reviewCard = document.createElement('div');
+        reviewCard.className = 'review-card';
+        reviewCard.innerHTML = `
+          <div class="review-image">
+            <img src="${review.image}" alt="${review.name}">
+          </div>
+          <div class="review-content">
+            <h3>${review.name}</h3>
+            <div class="review-date">${review.date}</div>
+            <div class="review-stars">
+              ${getStarRating(review.rating)}
+            </div>
+            <p class="review-text">${review.text}</p>
+          </div>
+        `;
+        reviewsSlider.appendChild(reviewCard);
+        
+        // Create indicator
+        const indicator = document.createElement('div');
+        indicator.className = `indicator ${index === currentSlide ? 'active' : ''}`;
+        indicator.dataset.index = index;
+        reviewIndicators.appendChild(indicator);
+      });
+      
+      updateSliderPosition();
+    }
+
+    // Generate star rating HTML
+    function getStarRating(rating) {
+      let stars = '';
+      for (let i = 1; i <= 5; i++) {
+        if (i <= rating) {
+          stars += '<i class="fas fa-star"></i>';
+        } else {
+          stars += '<i class="far fa-star"></i>';
+        }
+      }
+      return stars;
+    }
+
+    // Update slider position
+    function updateSliderPosition() {
+      if (filteredReviews.length === 0) {
+        reviewsSlider.innerHTML = '<div class="review-card"><p>No reviews match your filter criteria.</p></div>';
+        return;
+      }
+      
+      reviewsSlider.style.transform = `translateX(-${currentSlide * 100}%)`;
+      
+      // Update indicators
+      document.querySelectorAll('.indicator').forEach((indicator, index) => {
+        indicator.classList.toggle('active', index === currentSlide);
+      });
+    }
+
+    // Filter reviews
+    function filterReviews(rating) {
+      if (rating === 'all') {
+        filteredReviews = [...reviewsData];
+      } else {
+        filteredReviews = reviewsData.filter(review => review.rating === parseInt(rating));
+      }
+      
+      currentSlide = 0;
+      renderReviews();
+    }
+
+    // Setup event listeners
+    function setupEventListeners() {
+      // Previous review button
+      prevReviewBtn.addEventListener('click', () => {
+        if (currentSlide > 0) {
+          currentSlide--;
+          updateSliderPosition();
+        }
+      });
+      
+      // Next review button
+      nextReviewBtn.addEventListener('click', () => {
+        if (currentSlide < filteredReviews.length - 1) {
+          currentSlide++;
+          updateSliderPosition();
+        }
+      });
+      
+      // Filter buttons
+      filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          filterBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          filterReviews(btn.dataset.filter);
+        });
+      });
+      
+      // Indicator clicks
+      reviewIndicators.addEventListener('click', (e) => {
+        if (e.target.classList.contains('indicator')) {
+          currentSlide = parseInt(e.target.dataset.index);
+          updateSliderPosition();
+        }
+      });
+      
+      // Review form submission
+      reviewForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        // Get form values
+        const name = document.getElementById('name').value;
+        const rating = document.querySelector('input[name="rating"]:checked').value;
+        const reviewText = document.getElementById('review').value;
+        
+        // Show success message (in a real app, this would be sent to a server)
+        alert(`Thank you, ${name}! Your ${rating}-star review has been submitted.`);
+        
+        // Reset form
+        reviewForm.reset();
+      });
+
+      // Keyboard navigation
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft') {
+          if (currentSlide > 0) {
+            currentSlide--;
+            updateSliderPosition();
+          }
+        } else if (e.key === 'ArrowRight') {
+          if (currentSlide < filteredReviews.length - 1) {
+            currentSlide++;
+            updateSliderPosition();
+          }
+        }
+      });
+    }
+
+    // Initialize the page when DOM is loaded
+    document.addEventListener('DOMContentLoaded', init);
+  </script>
+</body>
+</html>

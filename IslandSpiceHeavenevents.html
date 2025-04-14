@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Island Spice Heaven - Upcoming Events</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* Reset and Base Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      background-color: #f9f9f9;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* Header Styles */
+    header {
+      background-color: #fff;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      padding: 20px 0;
+      margin-bottom: 40px;
+      text-align: center;
+    }
+
+    .logo h1 {
+      font-size: 2.5rem;
+      color: #e67e22;
+      font-weight: 700;
+    }
+
+    .tagline {
+      color: #777;
+      font-size: 1.1rem;
+      margin-top: 5px;
+    }
+
+    /* Section Title */
+    .section-title {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    .section-title h2 {
+      font-size: 2.5rem;
+      color: #333;
+      margin-bottom: 15px;
+    }
+
+    .section-title p {
+      color: #777;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    /* Events Section */
+    .events-section {
+      padding: 60px 0;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      margin-bottom: 60px;
+    }
+
+    .featured-event {
+      background-color: #fff8f0;
+      border-radius: 10px;
+      padding: 30px;
+      margin-bottom: 40px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .featured-event::before {
+      content: "Featured";
+      position: absolute;
+      top: 20px;
+      right: -30px;
+      background-color: #e67e22;
+      color: white;
+      padding: 5px 30px;
+      transform: rotate(45deg);
+      font-size: 0.8rem;
+      font-weight: bold;
+    }
+
+    .featured-event-content {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 30px;
+    }
+
+    .featured-event-image {
+      flex: 1;
+      min-width: 300px;
+      border-radius: 10px;
+      overflow: hidden;
+      height: 300px;
+    }
+
+    .featured-event-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .featured-event-details {
+      flex: 2;
+      min-width: 300px;
+    }
+
+    .featured-event-title {
+      font-size: 2rem;
+      color: #333;
+      margin-bottom: 15px;
+    }
+
+    .event-meta {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .event-meta-item {
+      display: flex;
+      align-items: center;
+      color: #777;
+    }
+
+    .event-meta-item i {
+      color: #e67e22;
+      margin-right: 8px;
+    }
+
+    .event-description {
+      margin-bottom: 20px;
+      color: #555;
+    }
+
+    .event-cta {
+      display: inline-block;
+      background-color: #e67e22;
+      color: white;
+      padding: 12px 30px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .event-cta:hover {
+      background-color: #d35400;
+      transform: translateY(-3px);
+    }
+
+    /* Events List */
+    .events-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 30px;
+    }
+
+    .event-card {
+      background-color: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      transition: all 0.3s ease;
+    }
+
+    .event-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .event-card-image {
+      height: 200px;
+      overflow: hidden;
+    }
+
+    .event-card-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: all 0.5s ease;
+    }
+
+    .event-card:hover .event-card-image img {
+      transform: scale(1.1);
+    }
+
+    .event-card-content {
+      padding: 20px;
+    }
+
+    .event-card-title {
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+      color: #333;
+    }
+
+    .event-card-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-bottom: 15px;
+      font-size: 0.9rem;
+    }
+
+    .event-card-description {
+      color: #555;
+      margin-bottom: 20px;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .event-card-cta {
+      display: inline-block;
+      background-color: transparent;
+      color: #e67e22;
+      padding: 8px 20px;
+      border: 1px solid #e67e22;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .event-card-cta:hover {
+      background-color: #e67e22;
+      color: white;
+    }
+
+    /* Event Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      z-index: 1000;
+      overflow-y: auto;
+      padding: 50px 0;
+    }
+
+    .modal-content {
+      background-color: white;
+      max-width: 600px;
+      margin: 0 auto;
+      border-radius: 10px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .close-modal {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      font-size: 1.5rem;
+      color: white;
+      background-color: rgba(0, 0, 0, 0.5);
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .close-modal:hover {
+      background-color: rgba(0, 0, 0, 0.8);
+    }
+
+    .modal-image {
+      height: 250px;
+    }
+
+    .modal-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .modal-details {
+      padding: 30px;
+    }
+
+    .modal-title {
+      font-size: 1.8rem;
+      margin-bottom: 15px;
+      color: #333;
+    }
+
+    .modal-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .modal-description {
+      margin-bottom: 30px;
+      color: #555;
+    }
+
+    .rsvp-form {
+      margin-top: 30px;
+      border-top: 1px solid #eee;
+      padding-top: 30px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-size: 1rem;
+    }
+
+    .submit-btn {
+      background-color: #e67e22;
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 30px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .submit-btn:hover {
+      background-color: #d35400;
+    }
+
+    /* Newsletter Section */
+    .newsletter {
+      background-color: #fff;
+      padding: 60px 0;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      margin-bottom: 60px;
+    }
+
+    .newsletter-form {
+      max-width: 600px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .newsletter-input {
+      flex: 1;
+      min-width: 200px;
+      padding: 12px 20px;
+      border: 1px solid #ddd;
+      border-radius: 30px;
+      font-size: 1rem;
+    }
+
+    .newsletter-btn {
+      background-color: #e67e22;
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 30px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .newsletter-btn:hover {
+      background-color: #d35400;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 20px 0;
+      color: #777;
+      font-size: 0.9rem;
+    }
+
+    /* Responsive Styles */
+    @media screen and (max-width: 768px) {
+      .logo h1 {
+        font-size: 2rem;
+      }
+
+      .section-title h2 {
+        font-size: 2rem;
+      }
+
+      .featured-event-title {
+        font-size: 1.8rem;
+      }
+
+      .events-list {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      }
+    }
+
+    @media screen and (max-width: 480px) {
+      .logo h1 {
+        font-size: 1.8rem;
+      }
+
+      .section-title h2 {
+        font-size: 1.8rem;
+      }
+
+      .featured-event {
+        padding: 20px;
+      }
+
+      .featured-event-title {
+        font-size: 1.5rem;
+      }
+
+      .event-card-title {
+        font-size: 1.3rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="container">
+      <div class="logo">
+        <h1>Island Spice Heaven</h1>
+      </div>
+      <p class="tagline">Authentic Mauritian Cuisine with Exceptional Service</p>
+    </div>
+  </header>
+
+  <!-- Events Section -->
+  <section class="events-section">
+    <div class="container">
+      <div class="section-title">
+        <h2>Upcoming Events</h2>
+        <p>Join us for special culinary experiences and cultural celebrations</p>
+      </div>
+
+      <!-- Featured Event -->
+      <div class="featured-event">
+        <div class="featured-event-content">
+          <div class="featured-event-image">
+            <img src="https://images.unsplash.com/photo-1555244162-803834f70033?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Mauritian Seafood Festival">
+          </div>
+          <div class="featured-event-details">
+            <h3 class="featured-event-title">Mauritian Seafood Festival</h3>
+            <div class="event-meta">
+              <div class="event-meta-item">
+                <i class="fas fa-calendar-alt"></i>
+                <span>November 15, 2023</span>
+              </div>
+              <div class="event-meta-item">
+                <i class="fas fa-clock"></i>
+                <span>6:00 PM - 10:00 PM</span>
+              </div>
+              <div class="event-meta-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>Island Spice Heaven, Beachfront</span>
+              </div>
+            </div>
+            <p class="event-description">
+              Join us for an unforgettable evening celebrating the rich seafood traditions of Mauritius. Our executive chef has prepared a special menu featuring the freshest catches from local waters, prepared with authentic Mauritian spices and techniques. Enjoy live music, cooking demonstrations, and the beautiful beachfront setting as the sun sets over the ocean.
+            </p>
+            <a href="#" class="event-cta" data-event="seafood-festival">Reserve Your Spot</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Events List -->
+      <div class="events-list">
+        <!-- Event 1 -->
+        <div class="event-card">
+          <div class="event-card-image">
+            <img src="https://images.unsplash.com/photo-1470337458703-46ad1756a187?ixlib=rb-1.2.1&auto=format&fit=crop&w=1349&q=80" alt="Cocktail Masterclass">
+          </div>
+          <div class="event-card-content">
+            <h3 class="event-card-title">Tropical Cocktail Masterclass</h3>
+            <div class="event-card-meta">
+              <div class="event-meta-item">
+                <i class="fas fa-calendar-alt"></i>
+                <span>October 28, 2023</span>
+              </div>
+              <div class="event-meta-item">
+                <i class="fas fa-clock"></i>
+                <span>4:00 PM - 6:00 PM</span>
+              </div>
+            </div>
+            <p class="event-card-description">
+              Learn how to craft delicious tropical cocktails using local Mauritian ingredients and spirits. Our expert mixologist will guide you through creating three signature drinks.
+            </p>
+            <a href="#" class="event-card-cta" data-event="cocktail-masterclass">Learn More</a>
+          </div>
+        </div>
+
+        <!-- Event 2 -->
+        <div class="event-card">
+          <div class="event-card-image">
+            <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Creole Cuisine Night">
+          </div>
+          <div class="event-card-content">
+            <h3 class="event-card-title">Creole Cuisine Night</h3>
+            <div class="event-card-meta">
+              <div class="event-meta-item">
+                <i class="fas fa-calendar-alt"></i>
+                <span>November 5, 2023</span>
+              </div>
+              <div class="event-meta-item">
+                <i class="fas fa-clock"></i>
+                <span>7:00 PM - 11:00 PM</span>
+              </div>
+            </div>
+            <p class="event-card-description">
+              Experience the vibrant flavors of Mauritian Creole cuisine with our special tasting menu. Enjoy traditional dishes with modern twists, accompanied by local music.
+            </p>
+            <a href="#" class="event-card-cta" data-event="creole-cuisine">Learn More</a>
+          </div>
+        </div>
+
+        <!-- Event 3 -->
+        <div class="event-card">
+          <div class="event-card-image">
+            <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Chef's Table Experience">
+          </div>
+          <div class="event-card-content">
+            <h3 class="event-card-title">Chef's Table Experience</h3>
+            <div class="event-card-meta">
+              <div class="event-meta-item">
+                <i class="fas fa-calendar-alt"></i>
+                <span>November 20, 2023</span>
+              </div>
+              <div class="event-meta-item">
+                <i class="fas fa-clock"></i>
+                <span>7:30 PM - 10:30 PM</span>
+              </div>
+            </div>
+            <p class="event-card-description">
+              An intimate dining experience with our executive chef. Enjoy a personalized 7-course tasting menu with wine pairings, while learning about the inspiration behind each dish.
+            </p>
+            <a href="#" class="event-card-cta" data-event="chefs-table">Learn More</a>
+          </div>
+        </div>
+
+        <!-- Event 4 -->
+        <div class="event-card">
+          <div class="event-card-image">
+            <img src="https://images.unsplash.com/photo-1516997121675-4c2d1684aa3e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Sunset Wine Tasting">
+          </div>
+          <div class="event-card-content">
+            <h3 class="event-card-title">Sunset Wine Tasting</h3>
+            <div class="event-card-meta">
+              <div class="event-meta-item">
+                <i class="fas fa-calendar-alt"></i>
+                <span>December 3, 2023</span>
+              </div>
+              <div class="event-meta-item">
+                <i class="fas fa-clock"></i>
+                <span>5:30 PM - 7:30 PM</span>
+              </div>
+            </div>
+            <p class="event-card-description">
+              Sample a selection of fine wines from around the world, perfectly paired with Mauritian appetizers. Enjoy the stunning sunset views from our beachfront terrace.
+            </p>
+            <a href="#" class="event-card-cta" data-event="wine-tasting">Learn More</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Newsletter Section -->
+  <section class="newsletter">
+    <div class="container">
+      <div class="section-title">
+        <h2>Stay Updated</h2>
+        <p>Subscribe to our newsletter to receive updates about upcoming events and special offers</p>
+      </div>
+      <form class="newsletter-form" id="newsletter-form">
+        <input type="email" class="newsletter-input" placeholder="Your email address" required>
+        <button type="submit" class="newsletter-btn">Subscribe</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>&copy; 2023 Island Spice Heaven. All Rights Reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Event Modal -->
+  <div class="modal" id="event-modal">
+    <div class="modal-content">
+      <span class="close-modal" id="close-modal">&times;</span>
+      <div class="modal-image">
+        <img id="modal-img" src="/placeholder.svg" alt="Event Image">
+      </div>
+      <div class="modal-details">
+        <h3 class="modal-title" id="modal-title"></h3>
+        <div class="modal-meta" id="modal-meta"></div>
+        <div class="modal-description" id="modal-description"></div>
+        <form class="rsvp-form" id="rsvp-form">
+          <h4>Reserve Your Spot</h4>
+          <div class="form-group">
+            <label for="name">Your Name</label>
+            <input type="text" id="name" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label for="guests">Number of Guests</label>
+            <select id="guests" class="form-control" required>
+              <option value="1">1 Person</option>
+              <option value="2">2 People</option>
+              <option value="3">3 People</option>
+              <option value="4">4 People</option>
+              <option value="5">5 People</option>
+              <option value="6">6+ People (We'll contact you)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="special-requests">Special Requests (Optional)</label>
+            <textarea id="special-requests" class="form-control" rows="3"></textarea>
+          </div>
+          <button type="submit" class="submit-btn">Confirm Reservation</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Event Data
+    const eventsData = {
+      "seafood-festival": {
+        title: "Mauritian Seafood Festival",
+        date: "November 15, 2023",
+        time: "6:00 PM - 10:00 PM",
+        location: "Island Spice Heaven, Beachfront",
+        description: "Join us for an unforgettable evening celebrating the rich seafood traditions of Mauritius. Our executive chef has prepared a special menu featuring the freshest catches from local waters, prepared with authentic Mauritian spices and techniques. Enjoy live music, cooking demonstrations, and the beautiful beachfront setting as the sun sets over the ocean.<br><br>The event includes:<br>- Welcome cocktail<br>- Seafood tasting stations<br>- Live cooking demonstrations<br>- Wine and cocktail pairings<br>- Live local music<br>- Beachfront dining experience<br><br>Tickets are limited, so reserve your spot early!",
+        image: "https://images.unsplash.com/photo-1555244162-803834f70033?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+        price: "$75 per person"
+      },
+      "cocktail-masterclass": {
+        title: "Tropical Cocktail Masterclass",
+        date: "October 28, 2023",
+        time: "4:00 PM - 6:00 PM",
+        location: "Island Spice Heaven, Bar Lounge",
+        description: "Learn how to craft delicious tropical cocktails using local Mauritian ingredients and spirits. Our expert mixologist will guide you through creating three signature drinks, sharing professional techniques and the stories behind each cocktail.<br><br>What's included:<br>- All ingredients and equipment<br>- Recipe cards to take home<br>- Tasting of all cocktails<br>- Light appetizers<br>- Certificate of completion<br><br>This is a hands-on class where you'll learn to make:<br>- Passion Fruit Rum Punch<br>- Lychee & Vanilla Martini<br>- Spiced Coconut Mojito",
+        image: "https://images.unsplash.com/photo-1470337458703-46ad1756a187?ixlib=rb-1.2.1&auto=format&fit=crop&w=1349&q=80",
+        price: "$45 per person"
+      },
+      "creole-cuisine": {
+        title: "Creole Cuisine Night",
+        date: "November 5, 2023",
+        time: "7:00 PM - 11:00 PM",
+        location: "Island Spice Heaven, Main Dining Room",
+        description: "Experience the vibrant flavors of Mauritian Creole cuisine with our special tasting menu. Enjoy traditional dishes with modern twists, accompanied by local music and cultural performances.<br><br>Our special menu includes:<br>- Rougaille Saucisse (Creole Sausage Stew)<br>- Vindaye Poisson (Fish Vindaye)<br>- Dholl Puri (Split Pea Flatbread)<br>- Gateau Patate (Sweet Potato Cake)<br>- And many more authentic dishes<br><br>Throughout the evening, enjoy performances of traditional Sega music and dance, celebrating the rich cultural heritage of Mauritius.",
+        image: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+        price: "$60 per person"
+      },
+      "chefs-table": {
+        title: "Chef's Table Experience",
+        date: "November 20, 2023",
+        time: "7:30 PM - 10:30 PM",
+        location: "Island Spice Heaven, Private Dining Room",
+        description: "An intimate dining experience with our executive chef. Enjoy a personalized 7-course tasting menu with wine pairings, while learning about the inspiration behind each dish and the techniques used to create them.<br><br>This exclusive experience is limited to just 8 guests, ensuring personalized attention and an opportunity to interact directly with our chef. Each course showcases the finest local ingredients and traditional Mauritian flavors with contemporary presentation.<br><br>The menu changes based on seasonal availability, but expect dishes that highlight the diverse culinary influences of Mauritius, from French and Indian to Chinese and African traditions.",
+        image: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+        price: "$120 per person (includes wine pairing)"
+      },
+      "wine-tasting": {
+        title: "Sunset Wine Tasting",
+        date: "December 3, 2023",
+        time: "5:30 PM - 7:30 PM",
+        location: "Island Spice Heaven, Beachfront Terrace",
+        description: "Sample a selection of fine wines from around the world, perfectly paired with Mauritian appetizers. Enjoy the stunning sunset views from our beachfront terrace as our sommelier guides you through each tasting.<br><br>The experience includes:<br>- Tasting of 6 premium wines<br>- Paired Mauritian-inspired appetizers<br>- Expert guidance from our sommelier<br>- Information booklet with tasting notes<br>- Spectacular sunset views<br><br>This event is perfect for both wine enthusiasts and beginners looking to expand their palate in a relaxed, beautiful setting.",
+        image: "https://images.unsplash.com/photo-1516997121675-4c2d1684aa3e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+        price: "$55 per person"
+      }
+    };
+
+    // DOM Elements
+    const modal = document.getElementById('event-modal');
+    const closeModal = document.getElementById('close-modal');
+    const modalImg = document.getElementById('modal-img');
+    const modalTitle = document.getElementById('modal-title');
+    const modalMeta = document.getElementById('modal-meta');
+    const modalDescription = document.getElementById('modal-description');
+    const rsvpForm = document.getElementById('rsvp-form');
+    const newsletterForm = document.getElementById('newsletter-form');
+    const eventLinks = document.querySelectorAll('[data-event]');
+
+    // Open modal with event details
+    function openEventModal(eventId) {
+      const event = eventsData[eventId];
+      if (!event) return;
+
+      modalImg.src = event.image;
+      modalImg.alt = event.title;
+      modalTitle.textContent = event.title;
+      
+      modalMeta.innerHTML = `
+        <div class="event-meta-item">
+          <i class="fas fa-calendar-alt"></i>
+          <span>${event.date}</span>
+        </div>
+        <div class="event-meta-item">
+          <i class="fas fa-clock"></i>
+          <span>${event.time}</span>
+        </div>
+        <div class="event-meta-item">
+          <i class="fas fa-map-marker-alt"></i>
+          <span>${event.location}</span>
+        </div>
+        <div class="event-meta-item">
+          <i class="fas fa-ticket-alt"></i>
+          <span>${event.price}</span>
+        </div>
+      `;
+      
+      modalDescription.innerHTML = event.description;
+      modal.style.display = 'block';
+      document.body.style.overflow = 'hidden'; // Prevent scrolling when modal is open
+    }
+
+    // Close modal
+    function closeEventModal() {
+      modal.style.display = 'none';
+      document.body.style.overflow = 'auto'; // Restore scrolling
+    }
+
+    // Setup event listeners
+    function setupEventListeners() {
+      // Event links
+      eventLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          const eventId = link.getAttribute('data-event');
+          openEventModal(eventId);
+        });
+      });
+
+      // Close modal
+      closeModal.addEventListener('click', closeEventModal);
+
+      // Close modal when clicking outside
+      window.addEventListener('click', (e) => {
+        if (e.target === modal) {
+          closeEventModal();
+        }
+      });
+
+      // Close modal with Escape key
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.style.display === 'block') {
+          closeEventModal();
+        }
+      });
+
+      // RSVP Form submission
+      rsvpForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const name = document.getElementById('name').value;
+        const guests = document.getElementById('guests').value;
+        const eventTitle = modalTitle.textContent;
+        
+        // In a real application, this would send data to a server
+        alert(`Thank you, ${name}! Your reservation for ${guests} guest(s) at "${eventTitle}" has been received. We'll send a confirmation email shortly.`);
+        
+        closeEventModal();
+        rsvpForm.reset();
+      });
+
+      // Newsletter form submission
+      newsletterForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const email = newsletterForm.querySelector('.newsletter-input').value;
+        
+        // In a real application, this would send data to a server
+        alert(`Thank you for subscribing to our newsletter with ${email}. You'll now receive updates about our upcoming events!`);
+        
+        newsletterForm.reset();
+      });
+    }
+
+    // Initialize the page
+    function init() {
+      setupEventListeners();
+    }
+
+    // Initialize when DOM is loaded
+    document.addEventListener('DOMContentLoaded', init);
+  </script>
+</body>
+</html>
